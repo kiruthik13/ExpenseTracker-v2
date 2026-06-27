@@ -49,8 +49,23 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }));
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'https://expense-tracker-v2-rho.vercel.app'
+];
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || true,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS Policy: Access denied'), false);
+  },
   credentials: true,
 }));
 app.use(morgan('combined', { stream: { write: (message) => logger.http(message.trim()) } }));
