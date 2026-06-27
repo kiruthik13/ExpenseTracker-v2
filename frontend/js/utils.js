@@ -300,7 +300,7 @@ function initNavbar() {
     const fetchNotifications = async () => {
       if (!token) return;
       try {
-        const res = await fetch('http://localhost:5000/api/v1/notifications/unread', {
+        const res = await fetch('https://expensetracker-v2.onrender.com/api/v1/notifications/unread', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const json = await res.json();
@@ -330,7 +330,7 @@ function initNavbar() {
                 e.stopPropagation();
                 const id = btn.getAttribute('data-id');
                 try {
-                  await fetch(`http://localhost:5000/api/v1/notifications/${id}/read`, {
+                  await fetch(`https://expensetracker-v2.onrender.com/api/v1/notifications/${id}/read`, {
                     method: 'PUT',
                     headers: { 'Authorization': `Bearer ${token}` }
                   });
@@ -350,7 +350,7 @@ function initNavbar() {
         e.stopPropagation();
         if (!token) return;
         try {
-          await fetch('http://localhost:5000/api/v1/notifications/read-all', {
+          await fetch('https://expensetracker-v2.onrender.com/api/v1/notifications/read-all', {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
           });
