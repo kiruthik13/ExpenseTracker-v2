@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — ExpenseTracker</title>
+  <meta name="description" content="Your personal finance dashboard — overview of income, expenses, budgets and trends." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%231A4731'/%3E%3Ctext y='.9em' font-size='70' x='15'%3E₹%3C/text%3E%3C/svg%3E" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div id="toast-container"></div>
+  <div class="app-wrapper">
+    <div id="sidebar-placeholder"></div>
+    <div class="main-content">
+      <div id="navbar-placeholder"></div>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 id="dashboard-greeting" class="page-title">Welcome back, <span class="accent-text">Kiruthik</span> 👋</h1>
+          <p class="page-subtitle">Here's your financial overview for this month</p>
+        </div>
+        <button id="quick-add-btn" class="btn-primary-custom">
+          <i class="fas fa-plus"></i> Add expense
+        </button>
+      </div>
+
+      <!-- KPI Cards Row -->
+      <div class="stats-grid">
+        <!-- Card 1 — Total Income -->
+        <div class="stat-card income">
+          <div class="stat-card-row-top">
+            <div class="stat-card-icon-box"><i class="fas fa-trending-up"></i></div>
+            <div class="stat-card-badge">↑ This month</div>
+          </div>
+          <div class="stat-card-amount" id="stat-income">—</div>
+          <div class="stat-card-label">TOTAL INCOME</div>
+        </div>
+
+        <!-- Card 2 — Total Expenses -->
+        <div class="stat-card expense">
+          <div class="stat-card-row-top">
+            <div class="stat-card-icon-box"><i class="fas fa-trending-down"></i></div>
+            <div class="stat-card-badge">↓ This month</div>
+          </div>
+          <div class="stat-card-amount" id="stat-expense">—</div>
+          <div class="stat-card-label">TOTAL EXPENSES</div>
+        </div>
+
+        <!-- Card 3 — Net Balance -->
+        <div class="stat-card balance">
+          <div class="stat-card-row-top">
+            <div class="stat-card-icon-box"><i class="fas fa-scale-balanced"></i></div>
+            <div class="stat-card-badge">Balance</div>
+          </div>
+          <div class="stat-card-amount" id="stat-balance">—</div>
+          <div class="stat-card-label">NET BALANCE</div>
+        </div>
+
+        <!-- Card 4 — Savings -->
+        <div class="stat-card budget">
+          <div class="stat-card-row-top">
+            <div class="stat-card-icon-box"><i class="fas fa-piggy-bank"></i></div>
+            <div class="stat-card-badge" id="savings-badge">0 transactions</div>
+          </div>
+          <div class="stat-card-amount" id="stat-savings">—</div>
+          <div class="stat-card-label">SAVINGS</div>
+        </div>
+      </div>
+
+      <!-- Bottom Row Grid -->
+      <div class="dashboard-grid">
+        <!-- Chart Card (left) -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h2 class="card-title">Income vs Expenses</h2>
+              <span class="card-subtitle">Last 6 months</span>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <span class="legend-dot income"></span>
+                <span>Income</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot expense"></span>
+                <span>Expenses</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="chart-container">
+              <canvas id="trend-chart" style="max-height: 130px;"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transactions Card (right) -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h2 class="card-title">Recent transactions</h2>
+              <span class="card-subtitle">Latest activity</span>
+            </div>
+            <a href="/pages/expenses.html" style="font-size: 12px; font-weight: 600; color: #1A4731; text-decoration: none;">View all →</a>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div id="recent-transactions">
+              <!-- Dynamically populated or empty state fallback -->
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div class="skeleton" style="height:40px;border-radius:8px"></div>
+                <div class="skeleton" style="height:40px;border-radius:8px"></div>
+                <div class="skeleton" style="height:40px;border-radius:8px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Premium Features Grid -->
+      <div class="dashboard-grid" style="margin-top: 14px; grid-template-columns: 1fr 1.5fr;">
+        <!-- Left: Financial Health & Streak -->
+        <div class="card animate-fadeInUp" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div class="card-header" style="border: none; padding-bottom: 0;">
+            <div class="card-title-group">
+              <h2 class="card-title">Financial Health</h2>
+              <span class="card-subtitle">AI Computed Score</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 20px 0;">
+            <!-- Health Score Ring -->
+            <div style="position:relative; width:120px; height:120px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:var(--color-accent-bg);">
+              <span id="health-score-value" style="font-size:32px; font-weight:700; color:var(--color-accent);">—</span>
+              <div style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:50%; border: 8px solid var(--color-border); pointer-events: none;"></div>
+            </div>
+            <div id="health-score-status" style="font-weight:700; margin-top:12px; color:var(--color-text-primary); font-size:14px;">Calculated Profile</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-top:1px solid var(--color-border); padding-top:12px; font-size:12px;">
+            <span style="color:var(--color-text-muted);">Current Streak</span>
+            <span id="activity-streak-counter" style="font-weight:700; color:var(--color-savings);">🔥 0 Days</span>
+          </div>
+        </div>
+
+        <!-- Right: AI Spending Insights & Predictions -->
+        <div class="card animate-fadeInUp" style="padding: 20px;">
+          <div class="card-header" style="border: none; padding-bottom: 0;">
+            <div class="card-title-group">
+              <h2 class="card-title">AI Spending Insights</h2>
+              <span class="card-subtitle">End-of-Month Projections</span>
+            </div>
+          </div>
+          <div style="margin-top: 14px;">
+            <!-- Prediction Box -->
+            <div style="padding:12px 16px; border-radius:10px; background:var(--color-bg-page); display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <div>
+                <span style="font-size:11px; font-weight:700; color:var(--color-text-muted); text-transform:uppercase;">Predicted Spent</span>
+                <div id="predicted-spend-val" style="font-size:18px; font-weight:700; color:var(--color-text-primary); margin-top:2px;">$0.00</div>
+              </div>
+              <span id="predicted-spend-trend" style="font-size:11px; background:var(--color-accent-bg); color:var(--color-accent); padding:2px 8px; border-radius:10px; font-weight:600;">Based on history</span>
+            </div>
+            <!-- Insights list -->
+            <div id="ai-insights-list" style="display:flex; flex-direction:column; gap:8px;">
+              <div class="skeleton" style="height:35px; border-radius:8px;"></div>
+              <div class="skeleton" style="height:35px; border-radius:8px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Planning & Reminders Grid -->
+      <div class="dashboard-grid" style="margin-top: 14px;">
+        <!-- Savings Goals list -->
+        <div class="card animate-fadeInUp" style="padding: 20px;">
+          <div class="card-header" style="border-bottom:none; margin-bottom:8px;">
+            <div class="card-title-group">
+              <h2 class="card-title">Savings Progress</h2>
+              <span class="card-subtitle">Active savings goals</span>
+            </div>
+            <a href="/pages/savings.html" style="font-size:12px; font-weight:600; color:#1A4731; text-decoration:none;">Goal details →</a>
+          </div>
+          <div id="dash-savings-list" style="display:flex; flex-direction:column; gap:12px;">
+            <div class="skeleton" style="height:40px; border-radius:8px;"></div>
+          </div>
+        </div>
+
+        <!-- Upcoming Bills list -->
+        <div class="card animate-fadeInUp" style="padding: 20px;">
+          <div class="card-header" style="border-bottom:none; margin-bottom:8px;">
+            <div class="card-title-group">
+              <h2 class="card-title">Upcoming Reminders</h2>
+              <span class="card-subtitle">Bills and renewals</span>
+            </div>
+            <a href="/pages/subscriptions.html" style="font-size:12px; font-weight:600; color:#1A4731; text-decoration:none;">Manage all →</a>
+          </div>
+          <div id="dash-bills-list" style="display:flex; flex-direction:column; gap:12px;">
+            <div class="skeleton" style="height:40px; border-radius:8px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions / Additional details -->
+      <div class="card" style="margin-top: 14px;">
+        <div class="card-header">
+          <h2 class="card-title">Quick Actions</h2>
+        </div>
+        <div class="card-body" style="padding: 0;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+            <a href="/pages/expenses.html?action=add" class="btn-primary-custom" style="justify-content:center;text-decoration:none"><i class="fas fa-plus"></i> Add Expense</a>
+            <a href="/pages/categories.html" class="btn-ghost" style="justify-content:center;text-decoration:none"><i class="fas fa-tags"></i> Categories</a>
+            <a href="/pages/budgets.html" class="btn-ghost" style="justify-content:center;text-decoration:none"><i class="fas fa-wallet"></i> Budgets</a>
+            <a href="/pages/analytics.html" class="btn-ghost" style="justify-content:center;text-decoration:none"><i class="fas fa-chart-pie"></i> Analytics</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer-placeholder"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!-- Sidebar Component -->
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<button id="sidebar-toggle-btn" class="sidebar-toggle"><i class="fas fa-bars"></i></button>
+
+<aside class="sidebar">
+  <!-- Brand -->
+  <a href="/pages/dashboard.html" class="sidebar-brand">
+    <div class="sidebar-brand-icon">₹</div>
+    <div class="sidebar-brand-info">
+      <span class="sidebar-brand-text">ExpenseTracker</span>
+      <span class="sidebar-brand-tagline">Smart Personal Finance</span>
+    </div>
+  </a>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+
+    <a href="/pages/dashboard.html" class="nav-item">
+      <i class="fas fa-th-large"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <a href="/pages/expenses.html" class="nav-item">
+      <i class="fas fa-receipt"></i>
+      <span>Expenses</span>
+    </a>
+
+    <a href="/pages/categories.html" class="nav-item">
+      <i class="fas fa-tags"></i>
+      <span>Categories</span>
+    </a>
+
+    <a href="/pages/budgets.html" class="nav-item">
+      <i class="fas fa-wallet"></i>
+      <span>Budgets</span>
+    </a>
+
+    <div class="nav-section-label">Planning & Reminders</div>
+
+    <a href="/pages/calendar.html" class="nav-item">
+      <i class="fas fa-calendar-alt"></i>
+      <span>Calendar View</span>
+    </a>
+
+    <a href="/pages/savings.html" class="nav-item">
+      <i class="fas fa-bullseye"></i>
+      <span>Savings Goals</span>
+    </a>
+
+    <a href="/pages/subscriptions.html" class="nav-item">
+      <i class="fas fa-credit-card"></i>
+      <span>Subscriptions & Bills</span>
+    </a>
+
+    <div class="nav-section-label">Analytics</div>
+
+    <a href="/pages/analytics.html" class="nav-item">
+      <i class="fas fa-chart-pie"></i>
+      <span>Analytics</span>
+    </a>
+
+    <div class="nav-section-label">Account</div>
+
+    <a href="/pages/profile.html" class="nav-item">
+      <i class="fas fa-user-circle"></i>
+      <span>Profile</span>
+    </a>
+
+    <a href="/pages/settings.html" class="nav-item">
+      <i class="fas fa-cog"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <!-- User footer -->
+  <div class="sidebar-footer">
+    <div class="sidebar-user" onclick="window.location.href='/pages/profile.html'">
+      <img id="sidebar-avatar" class="sidebar-user-avatar" src="" alt="avatar" style="display:none">
+      <div id="sidebar-avatar-placeholder" class="sidebar-user-avatar-placeholder">KC</div>
+      <div class="sidebar-user-info">
+        <div id="sidebar-user-name" class="sidebar-user-name">Loading...</div>
+        <div class="sidebar-user-role">Personal Account</div>
+      </div>
+      <button id="logout-btn" class="logout-btn-icon" style="background:none;border:none;padding:0;cursor:pointer;" title="Logout">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </div>
+</aside>

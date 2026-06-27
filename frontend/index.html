@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ExpenseTracker — Smart Personal Finance Management</title>
+  <meta name="description" content="Track your personal expenses, set budgets, visualize analytics, and get financial insights with ExpenseTracker." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%231A4731'/%3E%3Ctext y='.9em' font-size='70' x='15'%3E₹%3C/text%3E%3C/svg%3E" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=DM+Serif+Display&display=swap');
+    html, body {
+      margin: 0;
+      background: #F4F6F3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+    }
+    .loader {
+      text-align: center;
+      color: #5A6354;
+    }
+    .loader-logo {
+      font-size: 64px;
+      animation: pulse 1.5s ease-in-out infinite;
+      color: #1A4731;
+    }
+    .loader-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      color: #1A1F16;
+      margin: 16px 0 8px;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="loader">
+    <div class="loader-logo">₹</div>
+    <div class="loader-text">ExpenseTracker</div>
+    <div style="font-size:13px; color: #8A9280;">Redirecting...</div>
+  </div>
+  <script>
+    const token = localStorage.getItem('accessToken');
+    setTimeout(() => {
+      window.location.href = token ? '/pages/dashboard.html' : '/pages/login.html';
+    }, 600);
+  </script>
+</body>
+</html>
