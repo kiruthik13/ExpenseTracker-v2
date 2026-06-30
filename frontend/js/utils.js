@@ -264,17 +264,19 @@ function initSidebar() {
   // Bind global logout button event
   const logoutBtn = document.getElementById('logout-btn');
   if (logoutBtn) {
-    logoutBtn.onclick = async () => {
-      try {
-        const token = localStorage.getItem('accessToken');
-        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-          ? 'http://localhost:5000/api/v1'
-          : 'https://expensetracker-v2.onrender.com/api/v1';
-        await fetch(`${API_BASE}/auth/logout`, {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-      } catch {}
+    logoutBtn.onclick = () => {
+      const token = localStorage.getItem('accessToken');
+      const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:5000/api/v1'
+        : 'https://expensetracker-v2.onrender.com/api/v1';
+      
+      // Fire-and-forget background logout call to the server
+      fetch(`${API_BASE}/auth/logout`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).catch(() => {});
+
+      // Instantly clear credentials and redirect to login
       localStorage.clear();
       window.location.href = '/pages/login.html';
     };
