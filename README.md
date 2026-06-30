@@ -8,10 +8,21 @@ Built using a service-repository-controller architecture on the backend, and a p
 
 ## 🚀 Core Features & Premium Modules
 
+### 🇮🇳 Enforced Indian Rupees (INR / ₹) Currency
+- **Rupee Localization:** The application is hardcoded to support Indian Rupees (`INR` and locale `en-IN` format: supporting lakhs/crores formatting). 
+- **Restricted Selection:** Non-INR currencies have been removed from user schemes, registration dropdowns, and settings profiles.
+- **Wealth Thresholds:** Achievements, descriptors, and badges have been scaled (e.g. `Wealth Builder` target adjusted to ₹1,00,000 savings balance).
+
 ### 🎨 Design & Layout (Premium Sage-White UI)
 - **Professional Light Theme:** Clean sage-white (`#F4F6F3`) page backgrounds with forest-green (`#1A4731`) accent branding. Zero dark backgrounds for premium readability.
 - **Typographic Pairing:** DM Serif Display (headings, titles & greetings) + Inter (general UI controls).
-- **Responsive Navigation Shell:** Slide-over sidebar for tablet and mobile screens, plus top navbar with search.
+- **Responsive Navigation Shell:** Slide-over sidebar for tablet and mobile screens, plus top navbar with search. The unstyled desktop menu toggle has been cleaned, and a sliding drawer overlay styled for mobile layouts.
+
+### 🗓️ Advanced Planners & Reminders
+- **Premium Expense Calendar View:** Interactive grid highlighting daily spent and income sums. Refactored from raw styling to custom CSS-classes featuring elevation hover micro-animations, color-coded visual badge pills for transaction sums, and today's cell glowing gradient highlight. Click any date cell to show a list modal.
+- **Savings Goal Tracker:** Define saving milestones with active progress bars, deadline counts, and deposit forms.
+- **Subscriptions & Bills Pay:** Manage Netflix, Spotify, or utility invoices. Marking a bill as "Paid" automatically creates a corresponding transaction entry in the expense records.
+- **Smart Notification alerts:** Bell notification center in the navbar displaying unread warnings, budget alerts, and renewal reminders.
 
 ### 💎 Premium Analytical Engine
 - **Financial Health Score:** A 0-100 real-time rating calculated dynamically based on user saving-to-spent ratios, budget limit compliance, and activity consistency.
@@ -20,13 +31,8 @@ Built using a service-repository-controller architecture on the backend, and a p
 - **Daily logging Streaks:** Gamified streak tracker that counts consecutive days of logging activity.
 - **Achievements Badge Center:** Unlockable trophies (e.g. `First Step`, `Wealth Builder`, `Goal Getter`, `Loyal Logger`) visible in grayscale until unlocked.
 
-### 🗓️ Advanced Planners & Reminders
-- **Monthly Expense Calendar View:** Interactive grid highlighting daily spent and income sums. Click any date cell to show a list modal.
-- **Savings Goal Tracker:** Define saving milestones with active progress bars, deadline counts, and deposit forms.
-- **Subscriptions & Bills Pay:** Manage Netflix, Spotify, or utility invoices. Marking a bill as "Paid" automatically creates a corresponding transaction entry in the expense records.
-- **Smart Notification alerts:** Bell notification center in the navbar displaying unread warnings, budget alerts, and renewal reminders.
-
 ### ⚙️ Backend & Security
+- **ESM-Preloaded rate limiting:** Features environment variable preloading via a dedicated bootstrap module to bypass ES Module hoisting order issues. Lifts local rate limits to 10,000 requests/15m in development mode to avoid `429 Too Many Requests` during manual testing.
 - **Layered Architecture:** Service-Repository-Controller structural separation.
 - **Access & Refresh JWT:** Silent access token rotation stored securely.
 - **Database Indexing:** Compound indexes on MongoDB for query optimization, soft-delete triggers, and pre-save hooks.
@@ -105,3 +111,20 @@ npm install
 npm run dev
 ```
 Open **`http://localhost:3000`** in your browser.
+
+---
+
+## 👥 Demo Sandbox Account & Seeding
+
+For quick sandbox exploration and manual validation, you can automatically seed the database with structured mock transaction datasets (including monthly streaks, goal counts, subscription records, and over-budget limits) denominated in Rupees.
+
+**To seed the database:**
+```bash
+cd backend
+npm run seed
+```
+
+**Sandbox Login Credentials:**
+- **Email:** `demo@example.com`
+- **Password:** `password123`
+
