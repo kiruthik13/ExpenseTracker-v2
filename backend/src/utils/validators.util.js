@@ -8,7 +8,7 @@ export const registerValidator = [
   body('fullName').trim().notEmpty().withMessage('Full name is required'),
   body('currency')
     .optional()
-    .isIn(['USD', 'EUR', 'GBP', 'INR', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'SGD'])
+    .isIn(['INR'])
     .withMessage('Invalid currency'),
 ];
 

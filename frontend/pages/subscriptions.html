@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Subscriptions & Bills — ExpenseTracker</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%231A4731'/%3E%3Ctext y='.9em' font-size='70' x='15'%3E₹%3C/text%3E%3C/svg%3E" />
   <!-- Google Fonts & FontAwesome -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -72,7 +73,7 @@
             <input type="text" id="sub-name" placeholder="e.g. Netflix, Spotify, AWS" required>
           </div>
           <div class="input-shell" style="margin-bottom:14px">
-            <label for="sub-amount">Monthly Cost ($)</label>
+            <label for="sub-amount">Monthly Cost (₹)</label>
             <input type="number" id="sub-amount" min="0.01" step="any" placeholder="0.00" required>
           </div>
           <div class="input-shell" style="margin-bottom:14px">
@@ -109,7 +110,7 @@
             <input type="text" id="bill-title" placeholder="e.g. Electricity Bill, House Rent" required>
           </div>
           <div class="input-shell" style="margin-bottom:14px">
-            <label for="bill-amount">Due Amount ($)</label>
+            <label for="bill-amount">Due Amount (₹)</label>
             <input type="number" id="bill-amount" min="0.01" step="any" placeholder="0.00" required>
           </div>
           <div class="input-shell" style="margin-bottom:14px">

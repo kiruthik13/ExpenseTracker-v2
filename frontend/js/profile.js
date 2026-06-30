@@ -199,7 +199,7 @@ async function loadAchievements() {
     const ALL_BADGES = [
       { key: 'first_expense', icon: 'fa-shoe-prints', title: 'First Step', desc: 'Log your first expense.' },
       { key: 'thirty_day_streak', icon: 'fa-fire', title: 'Loyal Logger', desc: 'Maintain a 30-day streak.' },
-      { key: 'saved_10000', icon: 'fa-piggy-bank', title: 'Wealth Builder', desc: 'Accumulate $10,000 in goals.' },
+      { key: 'saved_10000', icon: 'fa-piggy-bank', title: 'Wealth Builder', desc: 'Accumulate ₹1,00,000 in goals.' },
       { key: 'budget_master', icon: 'fa-crown', title: 'Disciplined Spender', desc: 'Keep budgets under limits.' },
       { key: 'smart_saver', icon: 'fa-check-circle', title: 'Goal Getter', desc: 'Complete your first goal.' },
       { key: 'expense_champion', icon: 'fa-award', title: 'Expense Champion', desc: 'Log 100 transactions.' }

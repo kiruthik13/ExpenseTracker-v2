@@ -134,7 +134,7 @@ class PremiumService {
 
     for (const [catId, sumThis] of Object.entries(categorySumsThisMonth)) {
       const sumLast = categorySumsLastMonth[catId] || 0;
-      if (sumThis > sumLast * 1.3 && sumThis - sumLast > 50) { // 30% increase and at least $50 diff
+      if (sumThis > sumLast * 1.3 && sumThis - sumLast > 1000) { // 30% increase and at least ₹1000 diff
         const diff = sumThis - sumLast;
         if (diff > maxSpikeAmount) {
           maxSpikeAmount = diff;
@@ -153,12 +153,12 @@ class PremiumService {
 
     // Rule 4: Savings Goal Motivation
     const activeGoals = await SavingsGoalRepository.findActiveByUserId(userId);
-    if (activeGoals.length > 0 && remaining > 50) {
+    if (activeGoals.length > 0 && remaining > 1000) {
       const targetGoal = activeGoals[0];
       insights.push({
         type: 'success',
         title: `Reach Your Goal: ${targetGoal.title}`,
-        message: `You have ${formatCurrencyShort(remaining)} in unallocated savings. Depositing $50 of this could help you reach your "${targetGoal.title}" target sooner!`
+        message: `You have ${formatCurrencyShort(remaining)} in unallocated savings. Depositing ₹1,000 of this could help you reach your "${targetGoal.title}" target sooner!`
       });
     }
 
@@ -235,7 +235,7 @@ function getCategorySums(txns) {
 }
 
 function formatCurrencyShort(amount) {
-  return `$${Math.round(amount)}`;
+  return `₹${Math.round(amount)}`;
 }
 
 export default new PremiumService();

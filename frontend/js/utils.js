@@ -54,12 +54,10 @@ export function showConfirm(title, message, confirmText = 'Delete', type = 'dang
 }
 
 // ── Currency Formatting ───────────────────────────────────────
-export function formatCurrency(amount, currency = 'USD') {
-  const user = getUser();
-  const curr = user?.currency || currency;
-  return new Intl.NumberFormat('en-US', {
+export function formatCurrency(amount) {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: curr,
+    currency: 'INR',
     maximumFractionDigits: 2,
   }).format(amount || 0);
 }
@@ -262,6 +260,25 @@ function initSidebar() {
       placeholderEl.textContent = getInitials(user.fullName);
     }
   }
+
+  // Bind global logout button event
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.onclick = async () => {
+      try {
+        const token = localStorage.getItem('accessToken');
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+          ? 'http://localhost:5000/api/v1'
+          : 'https://expensetracker-v2.onrender.com/api/v1';
+        await fetch(`${API_BASE}/auth/logout`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+      } catch {}
+      localStorage.clear();
+      window.location.href = '/pages/login.html';
+    };
+  }
 }
 
 function initNavbar() {
@@ -296,11 +313,14 @@ function initNavbar() {
     });
 
     const token = localStorage.getItem('accessToken');
+    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5000/api/v1'
+      : 'https://expensetracker-v2.onrender.com/api/v1';
 
     const fetchNotifications = async () => {
       if (!token) return;
       try {
-        const res = await fetch('https://expensetracker-v2.onrender.com/api/v1/notifications/unread', {
+        const res = await fetch(`${API_BASE}/notifications/unread`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const json = await res.json();
@@ -330,7 +350,7 @@ function initNavbar() {
                 e.stopPropagation();
                 const id = btn.getAttribute('data-id');
                 try {
-                  await fetch(`https://expensetracker-v2.onrender.com/api/v1/notifications/${id}/read`, {
+                  await fetch(`${API_BASE}/notifications/${id}/read`, {
                     method: 'PUT',
                     headers: { 'Authorization': `Bearer ${token}` }
                   });
@@ -350,7 +370,7 @@ function initNavbar() {
         e.stopPropagation();
         if (!token) return;
         try {
-          await fetch('https://expensetracker-v2.onrender.com/api/v1/notifications/read-all', {
+          await fetch(`${API_BASE}/notifications/read-all`, {
             method: 'PUT',
             headers: { 'Authorization': `Bearer ${token}` }
           });

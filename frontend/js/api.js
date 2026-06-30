@@ -2,7 +2,9 @@
    api.js — Axios HTTP Client with Auto Token Refresh
    ============================================================ */
 
-const BASE_URL = 'https://expensetracker-v2.onrender.com/api/v1';
+const BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000/api/v1'
+  : 'https://expensetracker-v2.onrender.com/api/v1';
 
 // ── Axios-like fetch wrapper ─────────────────────────────────
 class ApiClient {

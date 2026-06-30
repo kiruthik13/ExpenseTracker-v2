@@ -12,7 +12,7 @@ const BADGE_DEFS = {
   },
   saved_10000: {
     title: 'Wealth Builder',
-    description: 'Accumulate $10,000 in savings goals.'
+    description: 'Accumulate ₹1,00,000 in savings goals.'
   },
   budget_master: {
     title: 'Disciplined Spender',

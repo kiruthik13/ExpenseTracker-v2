@@ -44,7 +44,7 @@ class NotificationService {
           userId: uId,
           type: 'subscription_renewal',
           title: 'Subscription Renewal Alert 💳',
-          message: `Your subscription for "${sub.name}" ($${sub.amount}) is renewing on ${new Date(sub.nextBillingDate).toLocaleDateString()}.`
+          message: `Your subscription for "${sub.name}" (₹${sub.amount}) is renewing on ${new Date(sub.nextBillingDate).toLocaleDateString()}.`
         });
       }
     }
@@ -61,7 +61,7 @@ class NotificationService {
           userId: uId,
           type: 'bill_reminder',
           title: 'Bill Payment Alert ⏰',
-          message: `Your bill "${bill.title}" ($${bill.amount}) is due on ${new Date(bill.dueDate).toLocaleDateString()}.`
+          message: `Your bill "${bill.title}" (₹${bill.amount}) is due on ${new Date(bill.dueDate).toLocaleDateString()}.`
         });
       }
     }

@@ -45,7 +45,7 @@ async function loadMonthData() {
   try {
     // Fetch all transactions (un-paginated or retrieve page 1 with large limit e.g. 500)
     const res = await expenseAPI.getAll({ limit: 500 });
-    monthlyExpenses = res.data.docs.filter(item => {
+    monthlyExpenses = res.data.filter(item => {
       const d = new Date(item.date);
       return d.getFullYear() === year && (d.getMonth() + 1) === month;
     });
@@ -71,8 +71,8 @@ function renderCalendar() {
   for (let i = firstDayIndex; i > 0; i--) {
     const day = prevMonthTotalDays - i + 1;
     grid.innerHTML += `
-      <div style="background:var(--color-bg-page);border:1px solid var(--color-border);border-radius:8px;padding:8px;opacity:0.4;min-height:100px;display:flex;flex-direction:column;justify-content:space-between;">
-        <span style="font-size:12px;font-weight:700;color:var(--color-text-muted);">${day}</span>
+      <div class="calendar-cell inactive-cell">
+        <span class="calendar-day-number">${day}</span>
       </div>`;
   }
 
@@ -91,26 +91,23 @@ function renderCalendar() {
     const expenseSum = dayTxns.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
 
     const isToday = new Date().toDateString() === dayDate.toDateString();
+    const hasTx = dayTxns.length > 0;
 
-    let borderStyle = '1px solid var(--color-border)';
-    let bgStyle = '#FFFFFF';
-    if (isToday) {
-      borderStyle = '2px solid var(--color-accent)';
-      bgStyle = 'var(--color-accent-bg)';
-    }
+    let cellClasses = ['calendar-cell'];
+    if (isToday) cellClasses.push('is-today');
+    if (hasTx) cellClasses.push('has-tx');
 
-    const clickAttr = dayTxns.length > 0 ? `onclick="openDayModal('${dateStr}', ${day})"` : '';
-    const cursorStyle = dayTxns.length > 0 ? 'cursor:pointer;' : '';
+    const clickAttr = hasTx ? `onclick="openDayModal('${dateStr}', ${day})"` : '';
 
     grid.innerHTML += `
-      <div ${clickAttr} style="background:${bgStyle};border:${borderStyle};border-radius:8px;padding:8px;min-height:100px;display:flex;flex-direction:column;justify-content:space-between;transition:all 0.2s;${cursorStyle}" class="calendar-cell">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:12px;font-weight:700;color:${isToday ? 'var(--color-accent)' : 'var(--color-text-primary)'};">${day}</span>
-          ${dayTxns.length > 0 ? `<span style="font-size:9px;background:var(--color-border);padding:1px 5px;border-radius:10px;font-weight:600;color:var(--color-text-secondary);">${dayTxns.length} tx</span>` : ''}
+      <div ${clickAttr} class="${cellClasses.join(' ')}">
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+          <span class="calendar-day-number">${day}</span>
+          ${hasTx ? `<span class="calendar-tx-badge">${dayTxns.length} tx</span>` : ''}
         </div>
-        <div style="display:flex;flex-direction:column;gap:2px;align-items:flex-end;">
-          ${incomeSum > 0 ? `<span style="font-size:10px;color:var(--color-income);font-weight:700;">+${formatCurrency(incomeSum)}</span>` : ''}
-          ${expenseSum > 0 ? `<span style="font-size:10px;color:var(--color-expense);font-weight:700;">-${formatCurrency(expenseSum)}</span>` : ''}
+        <div class="calendar-values">
+          ${incomeSum > 0 ? `<span class="calendar-val income">+${formatCurrency(incomeSum)}</span>` : ''}
+          ${expenseSum > 0 ? `<span class="calendar-val expense">-${formatCurrency(expenseSum)}</span>` : ''}
         </div>
       </div>`;
   }

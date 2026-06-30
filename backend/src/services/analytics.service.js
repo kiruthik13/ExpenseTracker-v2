@@ -39,7 +39,7 @@ class AnalyticsService {
       totalExpenses,
       balance,
       monthlyIncomeSetting,
-      currency: user?.currency || 'USD',
+      currency: user?.currency || 'INR',
       savings: monthlyIncomeSetting > 0 ? monthlyIncomeSetting - totalExpenses : null,
       allTime: allTimeAgg,
       transactionCount: periodAgg.count || 0,

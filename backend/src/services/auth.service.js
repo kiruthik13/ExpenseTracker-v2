@@ -8,7 +8,7 @@ import { seedDefaultPaymentMethods } from '../seeds/paymentMethod.seed.js';
 import crypto from 'crypto';
 
 class AuthService {
-  async register({ email, password, fullName, currency = 'USD', timezone = 'UTC' }) {
+  async register({ email, password, fullName, currency = 'INR', timezone = 'UTC' }) {
     // Check if email already exists
     const existingEmail = await UserRepository.findByEmail(email);
     if (existingEmail) {

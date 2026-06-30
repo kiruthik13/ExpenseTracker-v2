@@ -5,6 +5,10 @@ class ExpenseRepository {
     return Expense.create(data);
   }
 
+  async findByUserId(userId) {
+    return Expense.find({ userId, isDeleted: false }).populate('categoryId', 'name icon color type');
+  }
+
   async findById(id, userId) {
     return Expense.findOne({ _id: id, userId, isDeleted: false })
       .populate('categoryId', 'name icon color type')

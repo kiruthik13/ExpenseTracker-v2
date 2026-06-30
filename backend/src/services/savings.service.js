@@ -44,7 +44,7 @@ class SavingsGoalService {
         .filter(g => g.status === 'completed')
         .reduce((sum, g) => sum + g.targetAmount, 0);
 
-      if (totalSaved >= 10000) {
+      if (totalSaved >= 100000) {
         await AchievementService.checkAndUnlock(userId, 'saved_10000');
       }
     }
